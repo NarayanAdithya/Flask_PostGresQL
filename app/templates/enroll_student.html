@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    <form action="" method="post">
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Student Name</label>
+            <select class="form-control" name="studentname" id="exampleFormControlSelect1">
+            {% for k in users %}
+              <option>{{k.username}}</option>
+            {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Course Name</label>
+            <select class="form-control" name="coursecode" id="exampleFormControlSelect1">
+            {% for k in courses %}
+              <option>{{k.course_code}}</option>
+            {% endfor %}
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Enroll</button>
+
+    </form>
+    <br><br><br><br><br><br>
+</div>
+
+{% endblock %}

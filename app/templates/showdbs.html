@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    
+<h1>Database Users</h1>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Username</th>
+        <th scope="col">Userrole</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% if users%}
+    {%for i in users%}
+      <tr>
+        <th scope="row">{{loop.index}}</th>
+        <td>{{i.username}}</td>
+        <td>{{i.user_role}}</td>
+        <td><a href="{{url_for('edit_record',type='user',id=i.id)}}" style="color:green;">Edit</a>|<a href="{{url_for('remove_record',type='user',id=i.id)}}" style="color:red;">Delete</a></td>
+      </tr>
+      {%endfor%}
+    {%endif%}
+    </tbody>
+  </table>
+  <button class="btn btn-success" ><a href="{{url_for('register')}}" style="color:white;">Add User</a> </button>
+<br><br><br>
+  <h1>Database Courses</h1>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Course Code</th>
+        <th scope="col">Course Name</th>
+        <th scope="col">Course By </th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% if courses %}
+        {%for i in courses%}
+      <tr>
+        <th scope="row">{{loop.index}}</th>
+        <td>{{i.course_code}}</td>
+        <td>{{i.course_name}}</td>
+        <td>{{i.taught_by.username}}</td>
+        <td><a href="{{url_for('edit_record',type='course',id=i.id)}}" style="color: green;">Edit</a>|<a href="{{url_for('remove_record',type='course',id=i.id)}}" style="color: red;">Delete</a></td>
+      </tr>
+      {% endfor %}
+      {%endif%}
+    </tbody>
+  </table>
+  <button class="btn btn-success" ><a href="{{url_for('create_course')}}" style="color:white;">Add Course</a> </button>
+<br><br><br>
+<h1>Database Enrolled</h1>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Course Code</th>
+        <th scope="col">Student Name</th>
+        <th scope="col">Teacher Name</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if courses %}
+      {%for k in courses%}
+      {% for j in k.has_students %}
+      <tr>
+        <th scope="row">{{loop.index}}</th>
+        <td>{{k.course_code}}</td>
+        <td>{{j.username}}</td>
+        <td>{{k.taught_by.username}}</td>
+        <td><a href="{{url_for('delete_student',username=j.username,coursecode=k.course_code)}}" style="color: red;">Delete</a></td>
+      </tr>
+      {%endfor%}
+      {% endfor %}
+      {% endif %}
+    </tbody>
+  </table>
+  <button class="btn btn-success" ><a href="{{url_for('enroll_student')}}" style="color:white;">Enroll Student</a> </button>
+  <br>
+  <br>
+</div>
+
+
+{%endblock%}
